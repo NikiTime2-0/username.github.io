@@ -1,6 +1,4 @@
-// --------------------
-// Interaktive Steps
-// --------------------
+// --------- Steps ----------
 const steps = {
   start: {
     text: "Hey… hast du Lust, heute etwas zu unternehmen? 🍂",
@@ -75,9 +73,7 @@ const steps = {
 
 let currentStep = "start";
 
-// --------------------
-// Step Anzeige
-// --------------------
+// --------- Anzeige ----------
 function showStep(effect){
   const step = steps[currentStep];
   const msg = document.getElementById("message");
@@ -87,11 +83,6 @@ function showStep(effect){
       ${step.buttons.map(b=>`<button onclick="nextStep('${b.next}','${b.effect||''}')">${b.text}</button>`).join("")}
     </div>`;
   msg.classList.add("fade-in");
-
-  const container = document.querySelector(".container");
-  container.style.transform = "scale(0.98)";
-  setTimeout(() => { container.style.transform = "scale(1)"; }, 150);
-
   if(effect) triggerEffect(effect);
 }
 
@@ -100,12 +91,10 @@ function nextStep(next,effect){
   currentStep = next;
   const msg = document.getElementById("message");
   msg.classList.remove("fade-in");
-  setTimeout(()=>showStep(effect),300);
+  setTimeout(()=>showStep(effect),150);
 }
 
-// --------------------
-// Hintergrund Animation: Herbstblätter + Antwort Effekte
-// --------------------
+// --------- Canvas Herbstblätter + Effekte ----------
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -113,7 +102,6 @@ canvas.height = window.innerHeight;
 
 const leaves = [];
 const flying = [];
-
 for(let i=0;i<50;i++){
   leaves.push({
     x: Math.random()*canvas.width,
@@ -163,12 +151,12 @@ function animate(){
     ctx.restore();
   });
 
-  // Antwort-Effekte
+  // Antwort Effekte
   for(let i=flying.length-1;i>=0;i--){
     const f = flying[i];
     f.x += f.dx;
     f.y += f.dy;
-    f.dy += 0.05; // Gravitation
+    f.dy += 0.05;
     ctx.save();
     ctx.translate(f.x,f.y);
     ctx.fillStyle = f.type==="burger"?"#c44": f.type==="herzen"?"#f55":"#a52";
@@ -183,5 +171,6 @@ function animate(){
 }
 
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
 animate();
 showStep();
