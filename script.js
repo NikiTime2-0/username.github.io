@@ -1,25 +1,25 @@
 // --------------------
-// Interaktive Steps
+// Steps
 // --------------------
 const steps = {
   start: {
-    text: "Hey… hast du Lust, heute etwas zu unternehmen? 😎",
+    text: "Hey… Lust auf ein kleines Abenteuer heute? 🌙✨",
     buttons: [
-      { text: "Ja klar! 😄", next: "ideen", effect: "hearts" },
+      { text: "Ja klar 😄", next: "ideen", effect: "hearts" },
       { text: "Vielleicht später 🤔", next: "wiederholen1" }
     ]
   },
   wiederholen1: {
-    text: "Oh, wähle nochmal 😏",
+    text: "Hmm, wähle nochmal 😏",
     buttons: [
       { text: "Okay, jetzt ja 😎", next: "ideen", effect: "hearts" },
       { text: "Nö 😅", next: "restart" }
     ]
   },
   restart: {
-    text: "Du bist hartnäckig 😏, wir fangen nochmal von vorne an!",
+    text: "Alles klar, wir starten nochmal von vorne 🔄",
     buttons: [
-      { text: "Neustart 🔄", next: "start" }
+      { text: "Neustart", next: "start" }
     ]
   },
   ideen: {
@@ -106,17 +106,36 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const particles = [];
 const flying = [];
+const stars = [];
+const moon = { x: canvas.width-100, y: 100, radius: 50 };
 
-// Dynamischer Farbverlauf Hintergrund
+// Sterne zufällig erzeugen
+for(let i=0;i<120;i++){
+  stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2+0.5, alpha: Math.random() });
+}
+
+// Dynamischer Sternenhimmel
 function animateBackground(){
-  const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-  const time = Date.now() * 0.0001;
-  gradient.addColorStop(0, `hsl(${(time*50)%360},60%,25%)`);
-  gradient.addColorStop(1, `hsl(${(time*50+100)%360},60%,45%)`);
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = "#0b0c1a";
   ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // Sterne flackern
+  for(const s of stars){
+    s.alpha += (Math.random()-0.5)*0.05;
+    if(s.alpha<0) s.alpha=0;
+    if(s.alpha>1) s.alpha=1;
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // Mond
+  ctx.fillStyle = "#f0eec0";
+  ctx.beginPath();
+  ctx.arc(moon.x,moon.y,moon.radius,0,Math.PI*2);
+  ctx.fill();
 }
 
 // Effekte Trigger
@@ -127,10 +146,12 @@ function triggerEffect(type){
     flying.push({
       x: canvas.width/2,
       y: canvas.height/2,
-      dx: (Math.random()-0.5)*5,
-      dy: (Math.random()-1.5)*5,
+      dx: (Math.random()-0.5)*6,
+      dy: (Math.random()-2)*6,
       size: Math.random()*30+15,
-      type: type
+      type: type,
+      spin: (Math.random()-0.5)*0.2,
+      rotation: 0
     });
   }
 }
@@ -139,24 +160,16 @@ function triggerEffect(type){
 function animate(){
   animateBackground();
 
-  // fliegende Emojis
+  // fliegende Emojis mit Physics
   for(let i=flying.length-1;i>=0;i--){
     const f = flying[i];
     f.x += f.dx;
     f.y += f.dy;
-    f.dy += 0.05;
+    f.dy += 0.15; // gravity
+    f.dx *= 0.99; // air friction
+    f.rotation += f.spin;
+
     ctx.save();
     ctx.translate(f.x,f.y);
+    ctx.rotate(f.rotation);
     ctx.font = `${f.size}px sans-serif`;
-    const emoji = f.type==="burger"?"🍔":f.type==="hearts"?"❤️":"⭐";
-    ctx.fillText(emoji,0,0);
-    ctx.restore();
-    if(f.y>canvas.height+50 || f.x<-50 || f.x>canvas.width+50) flying.splice(i,1);
-  }
-
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-animate();
-showStep();
