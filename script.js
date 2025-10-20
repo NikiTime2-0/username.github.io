@@ -1,5 +1,5 @@
-// --- Google Sheets Web-App URL hier einfügen ---
-const SHEET_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+// --- Google Sheets Web-App URL ---
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw1aIkeiw1GCi3Wj1GEGKV1cRZn8oOC98oZM86y5u6ge2FGGL_vGEsxvgfvnIBYycHz/exec";
 
 const steps = [
   {
@@ -26,7 +26,7 @@ const steps = [
 
 let step = 0;
 
-// --- Initiale Anzeige ---
+// --- Erste Nachricht anzeigen ---
 function showStep() {
   const msg = document.getElementById("message");
   msg.innerHTML = `
