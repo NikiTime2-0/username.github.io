@@ -4,8 +4,7 @@ body, html {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
-  background: #f5e9df;
-  color: #1c1c1e;
+  background: #1c1c1e;
 }
 
 canvas#bgCanvas {
@@ -17,7 +16,7 @@ canvas#bgCanvas {
 
 .container {
   position: absolute;
-  bottom: 80px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -25,8 +24,8 @@ canvas#bgCanvas {
   max-width: 450px;
   padding: 2rem;
   border-radius: 25px;
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 h1 {
@@ -43,7 +42,7 @@ h1 {
 }
 
 button {
-  background: linear-gradient(135deg, #d67e00, #ffb347);
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
   border: none;
   color: white;
   padding: 1rem 2rem;
