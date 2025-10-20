@@ -4,6 +4,7 @@ html, body {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
+  background: #0b0c1a;
 }
 
 canvas#bgCanvas {
