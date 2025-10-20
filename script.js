@@ -37,19 +37,19 @@ let step = 0;
 
 function showStep() {
   const msg = document.getElementById("message");
+  msg.innerHTML = `
+    <h1>${steps[step].text}</h1>
+    <div class="buttons">
+      ${steps[step].buttons.map(b => `<button onclick="nextStep('${b}')">${b}</button>`).join("")}
+    </div>`;
+  // Fade-In Animation
   msg.classList.remove("fade-in");
-  setTimeout(() => {
-    msg.innerHTML = `
-      <h1>${steps[step].text}</h1>
-      <div class="buttons">
-        ${steps[step].buttons.map(b => `<button onclick="nextStep('${b}')">${b}</button>`).join("")}
-      </div>`;
-    msg.classList.add("fade-in");
-  }, 200);
+  void msg.offsetWidth; // trigger reflow
+  msg.classList.add("fade-in");
 }
 
 function nextStep(choice) {
-  // Saubere Verzweigungslogik
+  // Verzweigungen
   if (choice === "Vielleicht später 🤔") step = 6;
   else if (choice === "Gemütlich kuscheln 🫂") step = 4;
   else if (choice === "Burger essen 🍔" && step === 4) step = 5;
@@ -58,7 +58,7 @@ function nextStep(choice) {
   showStep();
 }
 
-// ---------- Einfacher Bubbles Hintergrund ----------
+// --------- Einfacher Bubble-Hintergrund ---------
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -88,5 +88,7 @@ function animate() {
 }
 
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+// **Direkt beim Laden ersten Step anzeigen**
 showStep();
 animate();
