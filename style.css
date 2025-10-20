@@ -25,7 +25,6 @@ body, html {
   background: linear-gradient(135deg, #e0e5ec, #f0f4f8);
 }
 
-/* abstrakte Blobs */
 .blob {
   position: absolute;
   border-radius: 50%;
@@ -34,28 +33,13 @@ body, html {
   animation: float 15s infinite alternate ease-in-out;
 }
 
-.blob1 {
-  width: 400px; height: 400px;
-  background: #ff9a9e;
-  top: -100px; left: -150px;
-}
-
-.blob2 {
-  width: 300px; height: 300px;
-  background: #a1c4fd;
-  top: 200px; right: -100px;
-}
-
-.blob3 {
-  width: 500px; height: 500px;
-  background: #c2e9fb;
-  bottom: -200px; left: 50%;
-  transform: translateX(-50%);
-}
+.blob1 { width: 350px; height: 350px; background: #ff9a9e; top: -100px; left: -150px; }
+.blob2 { width: 250px; height: 250px; background: #a1c4fd; top: 200px; right: -100px; }
+.blob3 { width: 400px; height: 400px; background: #c2e9fb; bottom: -150px; left: 50%; transform: translateX(-50%); }
 
 @keyframes float {
   0% { transform: translateY(0) translateX(0); }
-  100% { transform: translateY(-50px) translateX(30px); }
+  100% { transform: translateY(-40px) translateX(30px); }
 }
 
 /* ------------------ */
@@ -64,11 +48,12 @@ body, html {
 .container {
   text-align: center;
   width: 90%;
-  max-width: 500px;
+  max-width: 450px;
   padding: 2rem;
   border-radius: 25px;
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
 }
 
 h1 {
@@ -89,19 +74,24 @@ button {
   background: #007aff;
   border: none;
   color: white;
-  padding: 0.8rem 1.8rem;
+  padding: 1rem 2rem;
   margin: 0.5rem;
-  border-radius: 14px;
+  border-radius: 18px;
   font-size: 1rem;
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
 button:hover {
   background: #005ecb;
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transform: scale(1.1);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+button:active {
+  transform: scale(0.95);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 /* fade-in animation */
@@ -116,4 +106,11 @@ button:hover {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* iPhone Optimierung */
+@media (max-width: 500px) {
+  .container { padding: 1.5rem; }
+  h1 { font-size: 1.5rem; }
+  button { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
 }
