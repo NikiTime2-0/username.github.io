@@ -82,12 +82,15 @@ const emojiSound = document.getElementById("emojiSound");
 function showStep(effect){
   const step = steps[currentStep];
   const msg = document.getElementById("message");
+  if(!step) return;
+
   msg.innerHTML = `
     <h1>${step.text}</h1>
     <div class="buttons">
       ${step.buttons.map(b=>`<button onclick="nextStep('${b.next}','${b.effect||''}')">${b.text}</button>`).join("")}
     </div>`;
   msg.classList.add("fade-in");
+
   if(effect) triggerEffect(effect);
 }
 
@@ -120,7 +123,6 @@ function animateBackground(){
   ctx.fillStyle = "#0b0c1a";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // Sterne flackern
   for(const s of stars){
     s.alpha += (Math.random()-0.5)*0.05;
     if(s.alpha<0) s.alpha=0;
@@ -160,7 +162,6 @@ function triggerEffect(type){
 function animate(){
   animateBackground();
 
-  // fliegende Emojis mit Physics
   for(let i=flying.length-1;i>=0;i--){
     const f = flying[i];
     f.x += f.dx;
@@ -173,3 +174,16 @@ function animate(){
     ctx.translate(f.x,f.y);
     ctx.rotate(f.rotation);
     ctx.font = `${f.size}px sans-serif`;
+    const emoji = f.type==="burger"?"🍔":f.type==="hearts"?"❤️":"⭐";
+    ctx.fillText(emoji,0,0);
+    ctx.restore();
+
+    if(f.y>canvas.height+50 || f.x<-50 || f.x>canvas.width+50) flying.splice(i,1);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+animate();
+showStep();
