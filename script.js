@@ -1,36 +1,12 @@
 const steps = [
-  {
-    text: "Hey… darf ich dir was fragen? 😏",
-    buttons: ["Ja, natürlich!", "Hmm… okay 😅"]
-  },
-  {
-    text: "Super! Lust auf ein kleines Abenteuer heute?",
-    buttons: ["Oh ja! 😄", "Vielleicht später 🤔"]
-  },
-  {
-    text: "Haha, toll! Ich hab schon was geplant…",
-    buttons: ["Erzähl mir! 😎", "Überrasch mich! 😋"]
-  },
-  {
-    text: "Perfekt 😍 Ich dachte, wir könnten…",
-    buttons: ["Burger essen 🍔", "Gemütlich kuscheln 🫂"]
-  },
-  {
-    text: "Oh, damit hab ich nicht gerechnet! 😳",
-    buttons: ["Burger essen 🍔"]
-  },
-  {
-    text: "Haha, das war witzig 😂",
-    buttons: ["Weiter 😌"]
-  },
-  {
-    text: "Vielleicht später? Kein Problem! 🔄",
-    buttons: ["Nochmal starten 🔄"]
-  },
-  {
-    text: "Ende! Deshalb klickt man nicht auf fremde Links 😂",
-    buttons: ["Neustart 🔁"]
-  }
+  { text: "Hey… darf ich dir was fragen? 😏", buttons: ["Ja, natürlich!", "Hmm… okay 😅"] },
+  { text: "Super! Lust auf ein kleines Abenteuer heute?", buttons: ["Oh ja! 😄", "Vielleicht später 🤔"] },
+  { text: "Haha, toll! Ich hab schon was geplant…", buttons: ["Erzähl mir! 😎", "Überrasch mich! 😋"] },
+  { text: "Perfekt 😍 Ich dachte, wir könnten…", buttons: ["Burger essen 🍔", "Gemütlich kuscheln 🫂"] },
+  { text: "Oh, damit hab ich nicht gerechnet! 😳", buttons: ["Burger essen 🍔"] },
+  { text: "Haha, das war witzig 😂", buttons: ["Weiter 😌"] },
+  { text: "Vielleicht später? Kein Problem! 🔄", buttons: ["Nochmal starten 🔄"] },
+  { text: "Ende! Deshalb klickt man nicht auf fremde Links 😂", buttons: ["Neustart 🔁"] }
 ];
 
 let step = 0;
@@ -42,14 +18,12 @@ function showStep() {
     <div class="buttons">
       ${steps[step].buttons.map(b => `<button onclick="nextStep('${b}')">${b}</button>`).join("")}
     </div>`;
-  // Fade-In Animation
   msg.classList.remove("fade-in");
   void msg.offsetWidth; // trigger reflow
   msg.classList.add("fade-in");
 }
 
 function nextStep(choice) {
-  // Verzweigungen
   if (choice === "Vielleicht später 🤔") step = 6;
   else if (choice === "Gemütlich kuscheln 🫂") step = 4;
   else if (choice === "Burger essen 🍔" && step === 4) step = 5;
@@ -66,12 +40,7 @@ canvas.height = window.innerHeight;
 
 const bubbles = [];
 for(let i=0;i<50;i++){
-  bubbles.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*4+1,
-    d: Math.random()*2+1
-  });
+  bubbles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*4+1, d: Math.random()*2+1 });
 }
 
 function animate() {
@@ -88,7 +57,5 @@ function animate() {
 }
 
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-
-// **Direkt beim Laden ersten Step anzeigen**
 showStep();
 animate();
