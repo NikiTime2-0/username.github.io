@@ -1,48 +1,60 @@
+/* Modern, Apple-inspiriert, dezente Farben */
 body {
-  background-color: #fafafa;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  color: #333;
+  margin: 0;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: 0;
+  background: linear-gradient(135deg, #e0e5ec, #f5f7fa);
+  color: #1c1c1e;
 }
 
 .container {
   text-align: center;
   width: 90%;
   max-width: 500px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 h1 {
-  font-weight: 400;
-  font-size: 1.6rem;
+  font-weight: 500;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
+  line-height: 1.4;
   transition: opacity 0.6s ease;
 }
 
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 button {
-  background: #ff8fa3;
+  background: #007aff;
   border: none;
   color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 1.5rem;
-  cursor: pointer;
-  font-size: 1rem;
+  padding: 0.8rem 1.8rem;
   margin: 0.5rem;
-  transition: background 0.3s ease, transform 0.2s ease;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 button:hover {
-  background: #ff748c;
+  background: #005ecb;
   transform: scale(1.05);
 }
 
 .fade-in {
   opacity: 0;
   transform: translateY(10px);
-  animation: fadeIn 1s forwards;
+  animation: fadeIn 0.8s forwards;
 }
 
 @keyframes fadeIn {
