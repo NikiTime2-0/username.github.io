@@ -1,6 +1,4 @@
-// --------------------
-// Steps
-// --------------------
+// --------- Steps
 const steps = {
   start: {
     text: "Hey… Lust auf ein kleines Abenteuer heute? 🌙✨",
@@ -17,13 +15,13 @@ const steps = {
     ]
   },
   restart: {
-    text: "Alles klar, wir starten nochmal von vorne 🔄",
+    text: "Alles klar, wir starten nochmal 🔄",
     buttons: [
       { text: "Neustart", next: "start" }
     ]
   },
   ideen: {
-    text: "Was machen wir zuerst?",
+    text: "Was wollen wir machen?",
     buttons: [
       { text: "Burger essen 🍔", next: "burger", effect: "burger" },
       { text: "Kuscheln 🫂", next: "kuscheln", effect: "hearts" }
@@ -44,14 +42,14 @@ const steps = {
     ]
   },
   spiel: {
-    text: "Haha 😜, kleines Fun-Moment!",
+    text: "Haha 😜, Fun-Moment!",
     buttons: [
       { text: "Du denkst an mich? ❤️", next: "lieblingsmoment", effect: "hearts" },
-      { text: "Hmm… ein Geheimnis 🤫", next: "lieblingsmoment", effect: "stars" }
+      { text: "Hmm… Geheimnis 🤫", next: "lieblingsmoment", effect: "stars" }
     ]
   },
   spaziergang: {
-    text: "Schön spazieren zu gehen… Das war mein Lieblingsmoment heute 🥰",
+    text: "Das war mein Lieblingsmoment heute 🥰",
     buttons: [
       { text: "Aww 💕", next: "ende" },
       { text: "Haha 😎", next: "ende" }
@@ -65,7 +63,7 @@ const steps = {
     ]
   },
   ende: {
-    text: "Danke, dass du mitgemacht hast! Du bist besonders 💌",
+    text: "Danke, dass du mitgemacht hast! 💌",
     buttons: [
       { text: "Nochmal 🔄", next: "start" }
     ]
@@ -74,7 +72,7 @@ const steps = {
 
 let currentStep = "start";
 
-// --------- Sounds ----------
+// -------- Sounds ----------
 const clickSound = document.getElementById("clickSound");
 const emojiSound = document.getElementById("emojiSound");
 
@@ -113,25 +111,24 @@ const flying = [];
 const stars = [];
 const moon = { x: canvas.width-100, y: 100, radius: 50 };
 
-// Sterne zufällig erzeugen
+// Sterne erzeugen
 for(let i=0;i<120;i++){
   stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2+0.5, alpha: Math.random() });
 }
 
-// Dynamischer Sternenhimmel
+// Hintergrund Animation
 function animateBackground(){
   ctx.fillStyle = "#0b0c1a";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  for(const s of stars){
+  stars.forEach(s=>{
     s.alpha += (Math.random()-0.5)*0.05;
-    if(s.alpha<0) s.alpha=0;
-    if(s.alpha>1) s.alpha=1;
+    s.alpha = Math.max(0,Math.min(1,s.alpha));
     ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
     ctx.beginPath();
     ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
     ctx.fill();
-  }
+  });
 
   // Mond
   ctx.fillStyle = "#f0eec0";
@@ -140,7 +137,7 @@ function animateBackground(){
   ctx.fill();
 }
 
-// Effekte Trigger
+// Fliegende Emojis
 function triggerEffect(type){
   emojiSound.play();
   const count = 15;
@@ -178,12 +175,4 @@ function animate(){
     ctx.fillText(emoji,0,0);
     ctx.restore();
 
-    if(f.y>canvas.height+50 || f.x<-50 || f.x>canvas.width+50) flying.splice(i,1);
-  }
-
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-animate();
-showStep();
+    if(f.y>
