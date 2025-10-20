@@ -1,22 +1,22 @@
 const steps = [
   {
     text: "Hey… darf ich dir was fragen?",
-    buttons: ["Ja", "Na gut"]
+    buttons: ["Ja 😄", "Na gut 😅"]
   },
   {
-    text: "Magst du ein kleines Abenteuer?",
-    buttons: ["Ja klar 😄", "Vielleicht später 🤔"]
+    text: "Super! Hast du Lust auf ein kleines Abenteuer?",
+    buttons: ["Ja klar 😎", "Vielleicht später 🤔"]
   },
   {
-    text: "Das freut mich 🥰 … ich möchte auch etwas unternehmen!",
+    text: "Perfekt! Ich möchte auch etwas unternehmen!",
     buttons: ["Burger essen 🍔", "Kuscheln 🫂"]
   },
   {
-    text: "Oh wie cool 😎 Das wird unser Lieblingsmoment heute!",
+    text: "Haha, das wird unser Lieblingsmoment heute 🥰",
     buttons: ["Weiter 😌"]
   },
   {
-    text: "Danke, dass du das gelesen hast! 💌",
+    text: "Danke, dass du mitgemacht hast! 💌",
     buttons: ["Ende 🌸", "Nochmal 🔄"]
   }
 ];
@@ -46,7 +46,7 @@ function nextStep() {
   showStep();
 }
 
-// ---------- Bubbles Hintergrund ----------
+// ---------- Simple Bubbles Hintergrund ----------
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
