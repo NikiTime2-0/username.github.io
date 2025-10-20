@@ -24,38 +24,17 @@ function showStep() {
 }
 
 function nextStep(choice) {
+  // Neue saubere Logik
   if (choice === "Vielleicht später 🤔") step = 6;
   else if (choice === "Gemütlich kuscheln 🫂") step = 4;
-  else if (choice === "Burger essen 🍔" && step === 4) step = 5;
+  else if (choice === "Burger essen 🍔") {
+    if (step === 3) step = 4; // direkt zum „Oh, damit hab ich nicht gerechnet!“
+    else step = 5;             // danach weiter wie geplant
+  }
   else if (choice.includes("Neustart") || choice.includes("Nochmal")) step = 0;
   else step++;
   showStep();
 }
 
-// --------- Einfacher Bubble-Hintergrund ---------
-const canvas = document.getElementById("bgCanvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const bubbles = [];
-for(let i=0;i<50;i++){
-  bubbles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*4+1, d: Math.random()*2+1 });
-}
-
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.7)";
-  bubbles.forEach(b => {
-    ctx.beginPath();
-    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-    ctx.fill();
-    b.y -= b.d;
-    if(b.y < 0) b.y = canvas.height;
-  });
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+// Direkt beim Laden den ersten Schritt anzeigen
 showStep();
-animate();
