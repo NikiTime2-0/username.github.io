@@ -1,71 +1,80 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  overflow: hidden;
-  background: #0b0c1a;
+const steps = [
+  {
+    text: "Hey… darf ich dir was fragen?",
+    buttons: ["Ja", "Na gut"]
+  },
+  {
+    text: "Magst du ein kleines Abenteuer?",
+    buttons: ["Ja klar 😄", "Vielleicht später 🤔"]
+  },
+  {
+    text: "Das freut mich 🥰 … ich möchte auch etwas unternehmen!",
+    buttons: ["Burger essen 🍔", "Kuscheln 🫂"]
+  },
+  {
+    text: "Oh wie cool 😎 Das wird unser Lieblingsmoment heute!",
+    buttons: ["Weiter 😌"]
+  },
+  {
+    text: "Danke, dass du das gelesen hast! 💌",
+    buttons: ["Ende 🌸", "Nochmal 🔄"]
+  }
+];
+
+let step = 0;
+
+function showStep() {
+  const msg = document.getElementById("message");
+  msg.classList.remove("fade-in");
+  setTimeout(() => {
+    if (step < steps.length) {
+      msg.innerHTML = `
+        <h1>${steps[step].text}</h1>
+        <div class="buttons">
+          ${steps[step].buttons.map(b => `<button onclick="nextStep()">${b}</button>`).join("")}
+        </div>`;
+      msg.classList.add("fade-in");
+    } else {
+      step = 0;
+      showStep();
+    }
+  }, 200);
 }
 
-canvas#bgCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+function nextStep() {
+  step++;
+  showStep();
 }
 
-.container {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 450px;
-  padding: 2rem;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(10px);
-  text-align: center;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+// ---------- Bubbles Hintergrund ----------
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const bubbles = [];
+for(let i=0;i<50;i++){
+  bubbles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*4+1,
+    d: Math.random()*2+1
+  });
 }
 
-h1 {
-  font-weight: 500;
-  font-size: 1.6rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.4;
-  color: #111;
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  bubbles.forEach(b => {
+    ctx.beginPath();
+    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+    ctx.fill();
+    b.y -= b.d;
+    if(b.y < 0) b.y = canvas.height;
+  });
+  requestAnimationFrame(animate);
 }
 
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-button {
-  background: linear-gradient(135deg,#8ec5fc,#e0c3fc);
-  border: none;
-  color: #111;
-  padding: 1rem 2rem;
-  margin: 0.5rem;
-  border-radius: 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-}
-
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 0.8s forwards;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+showStep();
+animate();
