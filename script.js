@@ -1,79 +1,84 @@
-// --------- Steps ----------
+// --------------------
+// Interaktive Steps
+// --------------------
 const steps = {
   start: {
-    text: "Hey… hast du Lust, heute etwas zu unternehmen? 🍂",
+    text: "Hey… hast du Lust, heute etwas zu unternehmen? 😎",
     buttons: [
-      { text: "Ja klar! 😄", next: "ideen" },
+      { text: "Ja klar! 😄", next: "ideen", effect: "hearts" },
       { text: "Vielleicht später 🤔", next: "wiederholen1" }
     ]
   },
   wiederholen1: {
     text: "Oh, wähle nochmal 😏",
     buttons: [
-      { text: "Okay, jetzt ja 😎", next: "ideen" },
-      { text: "Nö 😅", next: "ende1" }
+      { text: "Okay, jetzt ja 😎", next: "ideen", effect: "hearts" },
+      { text: "Nö 😅", next: "restart" }
+    ]
+  },
+  restart: {
+    text: "Du bist hartnäckig 😏, wir fangen nochmal von vorne an!",
+    buttons: [
+      { text: "Neustart 🔄", next: "start" }
     ]
   },
   ideen: {
     text: "Was machen wir zuerst?",
     buttons: [
       { text: "Burger essen 🍔", next: "burger", effect: "burger" },
-      { text: "Kuscheln 🫂", next: "kuscheln", effect: "herzen" }
+      { text: "Kuscheln 🫂", next: "kuscheln", effect: "hearts" }
     ]
   },
   burger: {
-    text: "Mmmh lecker 😋! Willst du danach noch einen Spaziergang machen? 🍁",
+    text: "Lecker 😋! Danach noch ein Spaziergang?",
     buttons: [
-      { text: "Ja, lass uns gehen 🚶‍♂️", next: "spaziergang", effect: "blaetter" },
-      { text: "Nein, lieber spielen 🎮", next: "spiel" }
+      { text: "Ja 🚶‍♂️", next: "spaziergang", effect: "stars" },
+      { text: "Nein 🎮", next: "spiel" }
     ]
   },
   kuscheln: {
-    text: "Aww 🥰 Kuscheln ist immer gut! Danach Lust auf einen Spaziergang? 🍁",
+    text: "Aww 🥰 Kuscheln ist toll! Danach Lust auf Spaziergang?",
     buttons: [
-      { text: "Ja 😄", next: "spaziergang", effect: "blaetter" },
-      { text: "Lieber Spiel 🎮", next: "spiel" }
+      { text: "Ja 😄", next: "spaziergang", effect: "stars" },
+      { text: "Lieber spielen 🎮", next: "spiel" }
     ]
   },
   spiel: {
-    text: "Haha, kleines Fun-Moment: Rate mal, was ich gerade gedacht habe! 😜",
+    text: "Haha 😜, kleines Fun-Moment!",
     buttons: [
-      { text: "Du denkst an mich? ❤️", next: "lieblingsmoment" },
-      { text: "Hmm… ein Geheimnis 🤫", next: "lieblingsmoment" }
+      { text: "Du denkst an mich? ❤️", next: "lieblingsmoment", effect: "hearts" },
+      { text: "Hmm… ein Geheimnis 🤫", next: "lieblingsmoment", effect: "stars" }
     ]
   },
   spaziergang: {
-    text: "Schön spazieren zu gehen 🍂… Jetzt war’s mein Lieblingsmoment heute 🥰",
+    text: "Schön spazieren zu gehen… Das war mein Lieblingsmoment heute 🥰",
     buttons: [
-      { text: "Aww 💕", next: "ende2" },
-      { text: "Haha 😎", next: "ende2" }
+      { text: "Aww 💕", next: "ende" },
+      { text: "Haha 😎", next: "ende" }
     ]
   },
   lieblingsmoment: {
-    text: "Richtig geraten! 🥰 Das war echt mein Lieblingsmoment heute.",
+    text: "Richtig geraten! 🥰 Lieblingsmoment!",
     buttons: [
-      { text: "Aww 💕", next: "ende2" },
-      { text: "Haha, cool 😎", next: "ende2" }
+      { text: "Aww 💕", next: "ende" },
+      { text: "Haha 😎", next: "ende" }
     ]
   },
-  ende1: {
-    text: "Schade 😅 Vielleicht ein anderes Mal!",
+  ende: {
+    text: "Danke, dass du mitgemacht hast! Du bist besonders 💌",
     buttons: [
-      { text: "Ende 🌸", next: null }
-    ]
-  },
-  ende2: {
-    text: "Danke, dass du bis hierher mitgemacht hast! Du bist wirklich besonders. 🍂💌",
-    buttons: [
-      { text: "Ende 🌸", next: null },
-      { text: "Abbrechen ❌", next: null }
+      { text: "Nochmal 🔄", next: "start" }
     ]
   }
 };
 
 let currentStep = "start";
 
-// --------- Anzeige ----------
+// --------- Sounds ----------
+const clickSound = document.getElementById("clickSound");
+const emojiSound = document.getElementById("emojiSound");
+
+// --------- Step Anzeige ----------
 function showStep(effect){
   const step = steps[currentStep];
   const msg = document.getElementById("message");
@@ -88,70 +93,53 @@ function showStep(effect){
 
 function nextStep(next,effect){
   if(!next) return;
+  clickSound.play();
   currentStep = next;
   const msg = document.getElementById("message");
   msg.classList.remove("fade-in");
   setTimeout(()=>showStep(effect),150);
 }
 
-// --------- Canvas Herbstblätter + Effekte ----------
+// --------- Canvas Hintergrund ----------
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const leaves = [];
+const particles = [];
 const flying = [];
-for(let i=0;i<50;i++){
-  leaves.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    size: Math.random()*20+10,
-    dy: Math.random()*1+0.5,
-    dx: (Math.random()-0.5)*0.5,
-    angle: Math.random()*Math.PI*2,
-    color: `hsla(${30+Math.random()*20},70%,50%,0.7)`
-  });
+
+// Dynamischer Farbverlauf Hintergrund
+function animateBackground(){
+  const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  const time = Date.now() * 0.0001;
+  gradient.addColorStop(0, `hsl(${(time*50)%360},60%,25%)`);
+  gradient.addColorStop(1, `hsl(${(time*50+100)%360},60%,45%)`);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 }
 
+// Effekte Trigger
 function triggerEffect(type){
-  const count = 10;
+  emojiSound.play();
+  const count = 15;
   for(let i=0;i<count;i++){
     flying.push({
       x: canvas.width/2,
       y: canvas.height/2,
-      dx: (Math.random()-0.5)*3,
-      dy: (Math.random()-1.5)*3,
-      size: Math.random()*20+10,
+      dx: (Math.random()-0.5)*5,
+      dy: (Math.random()-1.5)*5,
+      size: Math.random()*30+15,
       type: type
     });
   }
 }
 
+// Animation Loop
 function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  animateBackground();
 
-  // Blätter fallen
-  leaves.forEach(l=>{
-    l.y += l.dy;
-    l.x += l.dx;
-    l.angle += 0.01;
-    if(l.y>canvas.height) l.y=-20;
-    if(l.x>canvas.width) l.x=0;
-    ctx.save();
-    ctx.translate(l.x,l.y);
-    ctx.rotate(l.angle);
-    ctx.fillStyle = l.color;
-    ctx.beginPath();
-    ctx.moveTo(0,-l.size/2);
-    ctx.lineTo(l.size/4,l.size/2);
-    ctx.lineTo(-l.size/4,l.size/2);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-  });
-
-  // Antwort Effekte
+  // fliegende Emojis
   for(let i=flying.length-1;i>=0;i--){
     const f = flying[i];
     f.x += f.dx;
@@ -159,9 +147,8 @@ function animate(){
     f.dy += 0.05;
     ctx.save();
     ctx.translate(f.x,f.y);
-    ctx.fillStyle = f.type==="burger"?"#c44": f.type==="herzen"?"#f55":"#a52";
     ctx.font = `${f.size}px sans-serif`;
-    const emoji = f.type==="burger"?"🍔":f.type==="herzen"?"❤️":"🍂";
+    const emoji = f.type==="burger"?"🍔":f.type==="hearts"?"❤️":"⭐";
     ctx.fillText(emoji,0,0);
     ctx.restore();
     if(f.y>canvas.height+50 || f.x<-50 || f.x>canvas.width+50) flying.splice(i,1);
@@ -171,6 +158,5 @@ function animate(){
 }
 
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-
 animate();
 showStep();
