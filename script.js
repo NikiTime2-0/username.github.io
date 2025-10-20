@@ -47,5 +47,5 @@ function nextStep(index) {
   }, 300);
 }
 
-// Initial anzeigen
+// initial anzeigen
 showStep();
