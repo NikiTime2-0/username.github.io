@@ -1,32 +1,28 @@
-// --- Google Sheets Web-App URL ---
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbw1aIkeiw1GCi3Wj1GEGKV1cRZn8oOC98oZM86y5u6ge2FGGL_vGEsxvgfvnIBYycHz/exec";
-
 const steps = [
   {
-    text: "Hey… darf ich dir was fragen?",
+    text: "Hey… darf ich dich was fragen?",
     buttons: ["Ja", "Na gut"]
   },
   {
-    text: "Magst du mich ein bisschen?",
-    buttons: ["Ein bisschen? Ich mag dich sehr!", "Natürlich ❤️"]
+    text: "Ich wollte fragen, ob wir etwas zusammen unternehmen wollen?",
+    buttons: ["Ja, gerne!", "Klar"]
   },
   {
-    text: "Das freut mich 🥰 … denn ich mag dich auch – ziemlich doll sogar.",
-    buttons: ["Weiter 😌"]
+    text: "Das freut mich 🥰 … ich möchte auch etwas unternehmen!",
+    buttons: ["Burger essen gehen 🍔", "Kuscheln 🫂"]
   },
   {
-    text: "Weißt du was? Dieser kleine Klick war gerade mein Lieblingsmoment heute.",
-    buttons: ["Awww 💕"]
+    text: "Cool 😎! Das war gerade mein Lieblingsmoment heute.",
+    buttons: ["Aww 💕", "Weiter"]
   },
   {
     text: "Danke, dass du das gelesen hast. Du bist wirklich besonders.",
-    buttons: ["Ende 🌸"]
+    buttons: ["Ende 🌸", "Abbrechen ❌"]
   }
 ];
 
 let step = 0;
 
-// --- Erste Nachricht anzeigen ---
 function showStep() {
   const msg = document.getElementById("message");
   msg.innerHTML = `
@@ -37,19 +33,7 @@ function showStep() {
   msg.classList.add("fade-in");
 }
 
-showStep();
-
-// --- Nächster Schritt & Klick speichern ---
 function nextStep(index) {
-  const buttonText = steps[step].buttons[index];
-
-  // Klick an Google Sheets senden
-  fetch(SHEET_URL, {
-    method: "POST",
-    body: JSON.stringify({ step: step, button: buttonText, user: 'anon' }),
-    headers: { "Content-Type": "application/json" }
-  });
-
   step++;
   const msg = document.getElementById("message");
   msg.classList.remove("fade-in");
@@ -62,3 +46,6 @@ function nextStep(index) {
     }
   }, 300);
 }
+
+// Initial anzeigen
+showStep();
