@@ -183,4 +183,5 @@ function animate(){
 }
 
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-animat
+animate();
+showStep();
