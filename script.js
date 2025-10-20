@@ -1,136 +1,80 @@
-// --------- Steps
-const steps = {
-  start: {
-    text: "Hey… Lust auf ein kleines Abenteuer heute? 🌙✨",
-    buttons: [
-      { text: "Ja klar 😄", next: "ideen" },
-      { text: "Vielleicht später 🤔", next: "wiederholen1" }
-    ]
+const steps = [
+  {
+    text: "Hey… darf ich dir was fragen?",
+    buttons: ["Ja", "Na gut"]
   },
-  wiederholen1: {
-    text: "Hmm, wähle nochmal 😏",
-    buttons: [
-      { text: "Okay, jetzt ja 😎", next: "ideen" },
-      { text: "Nö 😅", next: "restart" }
-    ]
+  {
+    text: "Magst du ein kleines Abenteuer?",
+    buttons: ["Ja klar 😄", "Vielleicht später 🤔"]
   },
-  restart: {
-    text: "Alles klar, wir starten nochmal 🔄",
-    buttons: [
-      { text: "Neustart", next: "start" }
-    ]
+  {
+    text: "Das freut mich 🥰 … ich möchte auch etwas unternehmen!",
+    buttons: ["Burger essen 🍔", "Kuscheln 🫂"]
   },
-  ideen: {
-    text: "Was wollen wir machen?",
-    buttons: [
-      { text: "Burger essen 🍔", next: "burger" },
-      { text: "Kuscheln 🫂", next: "kuscheln" }
-    ]
+  {
+    text: "Oh wie cool 😎 Das wird unser Lieblingsmoment heute!",
+    buttons: ["Weiter 😌"]
   },
-  burger: {
-    text: "Lecker 😋! Danach noch ein Spaziergang?",
-    buttons: [
-      { text: "Ja 🚶‍♂️", next: "spaziergang" },
-      { text: "Nein 🎮", next: "spiel" }
-    ]
-  },
-  kuscheln: {
-    text: "Aww 🥰 Kuscheln ist toll! Danach Lust auf Spaziergang?",
-    buttons: [
-      { text: "Ja 😄", next: "spaziergang" },
-      { text: "Lieber spielen 🎮", next: "spiel" }
-    ]
-  },
-  spiel: {
-    text: "Haha 😜, Fun-Moment!",
-    buttons: [
-      { text: "Du denkst an mich? ❤️", next: "lieblingsmoment" },
-      { text: "Hmm… Geheimnis 🤫", next: "lieblingsmoment" }
-    ]
-  },
-  spaziergang: {
-    text: "Das war mein Lieblingsmoment heute 🥰",
-    buttons: [
-      { text: "Aww 💕", next: "ende" },
-      { text: "Haha 😎", next: "ende" }
-    ]
-  },
-  lieblingsmoment: {
-    text: "Richtig geraten! 🥰 Lieblingsmoment!",
-    buttons: [
-      { text: "Aww 💕", next: "ende" },
-      { text: "Haha 😎", next: "ende" }
-    ]
-  },
-  ende: {
-    text: "Danke, dass du mitgemacht hast! 💌",
-    buttons: [
-      { text: "Nochmal 🔄", next: "start" }
-    ]
+  {
+    text: "Danke, dass du das gelesen hast! 💌",
+    buttons: ["Ende 🌸", "Nochmal 🔄"]
   }
-};
+];
 
-let currentStep = "start";
+let step = 0;
 
-// --------- Step Anzeige ----------
-function showStep(){
-  const step = steps[currentStep];
-  const msg = document.getElementById("message");
-  if(!step) return;
-
-  msg.innerHTML = `
-    <h1>${step.text}</h1>
-    <div class="buttons">
-      ${step.buttons.map(b=>`<button onclick="nextStep('${b.next}')">${b.text}</button>`).join("")}
-    </div>`;
-  msg.classList.add("fade-in");
-}
-
-function nextStep(next){
-  if(!next) return;
-  currentStep = next;
+function showStep() {
   const msg = document.getElementById("message");
   msg.classList.remove("fade-in");
-  setTimeout(()=>showStep(),150);
+  setTimeout(() => {
+    if (step < steps.length) {
+      msg.innerHTML = `
+        <h1>${steps[step].text}</h1>
+        <div class="buttons">
+          ${steps[step].buttons.map(b => `<button onclick="nextStep()">${b}</button>`).join("")}
+        </div>`;
+      msg.classList.add("fade-in");
+    } else {
+      step = 0;
+      showStep();
+    }
+  }, 200);
 }
 
-// --------- Canvas Hintergrund (Sterne + Mond)
+function nextStep() {
+  step++;
+  showStep();
+}
+
+// ---------- Bubbles Hintergrund ----------
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const stars = [];
-const moon = { x: canvas.width-100, y: 100, radius: 50 };
-
-// Sterne zufällig erzeugen
-for(let i=0;i<120;i++){
-  stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2+0.5, alpha: Math.random() });
+const bubbles = [];
+for(let i=0;i<50;i++){
+  bubbles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*4+1,
+    d: Math.random()*2+1
+  });
 }
 
-function animateBackground(){
-  ctx.fillStyle = "#0b0c1a";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  stars.forEach(s=>{
-    s.alpha += (Math.random()-0.5)*0.05;
-    s.alpha = Math.max(0,Math.min(1,s.alpha));
-    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  bubbles.forEach(b => {
     ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
     ctx.fill();
+    b.y -= b.d;
+    if(b.y < 0) b.y = canvas.height;
   });
-
-  ctx.fillStyle = "#f0eec0";
-  ctx.beginPath();
-  ctx.arc(moon.x,moon.y,moon.radius,0,Math.PI*2);
-  ctx.fill();
-
-  requestAnimationFrame(animateBackground);
+  requestAnimationFrame(animate);
 }
 
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-
-// --------- Start
 showStep();
-animateBackground();
+animate();
