@@ -1,3 +1,23 @@
+// ❄️ Schneefall erzeugen
+function createSnow() {
+  const snow = document.createElement("div");
+  snow.classList.add("snowflake");
+  snow.textContent = ["❆", "❄️", "✻"][Math.floor(Math.random() * 3)];
+
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.fontSize = Math.random() * 12 + 10 + "px";
+  snow.style.animationDuration = Math.random() * 3 + 5 + "s";
+  snow.style.opacity = Math.random() * 0.8 + 0.2;
+
+  document.body.appendChild(snow);
+
+  setTimeout(() => snow.remove(), 8000);
+}
+
+// Alle 250ms eine Schneeflocke erzeugen
+setInterval(createSnow, 250);
+
+
 const steps = [
   { text: "Hey Vanessa lass uns mal was klarstellen 😏", buttons: ["Ja, was denn!", "Hmm… okay 😅"] },
   { text: "Wir wollen nach Straßburg auf den Weihnachtsmarkt", buttons: ["Oh ja! 😄", "Ja klar, klingt toll"] },
