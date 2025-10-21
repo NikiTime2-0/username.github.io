@@ -5,15 +5,18 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
   background: #0b0c1a;
+  position: relative;
 }
 
+/* optional: falls du bgCanvas nutzt, bleibt er erhalten */
 canvas#bgCanvas {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: -2;
 }
 
+/* Container bleibt wie gehabt */
 .container {
   position: fixed;
   bottom: 50px;
@@ -27,6 +30,7 @@ canvas#bgCanvas {
   backdrop-filter: blur(10px);
   text-align: center;
   box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  z-index: 2;
 }
 
 h1 {
@@ -68,4 +72,26 @@ button:hover {
 
 @keyframes fadeIn {
   to { opacity: 1; }
+}
+
+/* ❄️ Schneeflocken */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1em;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  z-index: -1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.3;
+  }
 }
