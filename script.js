@@ -21,10 +21,10 @@ const steps = [
   { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen","Niklas Autoschlüssel verstecken"] },
   { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
   { text: "Jemand wollte Niklas Führerschein verbrennen - aber ein Führerschein brennt nicht. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
-  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen 🎄", buttons: ["Ein Notfallpaket buchen","Jaaa, let's go"] },
+  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen 🎄", buttons: ["Ein Notfallpaket buchen","Jaaa, los gehts"] },
   { text: "Wähle dein Notfallpaket", buttons: ["Zusätzliche Bremse auf Beifahrerseite","Einen Helm","Snacks"] },
   { text: "Genau... 🎄", buttons: ["SNACKS"] },
-  { text: "Das wird schön - und denk dran: 'Nein gabs hier nie.' 🎄", buttons: ["Nochmal 🔁","ich freu mich"] },
+  { text: "Das wird schön - und deshalb gabs hier nie: 'Nein'🎄", buttons: ["Nochmal 🔁","ich freu mich"] },
   { text: "Bis bald! 🎄", buttons: ["Neustart"] }
 ];
 
@@ -57,7 +57,11 @@ function nextStep(choice) {
     case "Etwas anderes versuchen": step = 4; break;
     case "Perfekt - dann wär das geklärt": step = 7; break;
     case "Ein Notfallpaket buchen": step = 8; break;
-    case "Jaaa, let's go": step = 10; break;
+    case "Jaaa, let's go":
+    case "Jaaa, los gehts": // typografische Variante mit ’
+      step = 10;
+      break;
+
     case "Zusätzliche Bremse auf Beifahrerseite":
     case "Einen Helm":
     case "Snacks": step = 9; break;
