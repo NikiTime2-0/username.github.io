@@ -4,11 +4,10 @@ html, body {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
-  background: #0b0c1a;
+  background: linear-gradient(180deg, #0b0c1a, #1a1c2a);
   position: relative;
 }
 
-/* optional: falls du bgCanvas nutzt, bleibt er erhalten */
 canvas#bgCanvas {
   position: fixed;
   top: 0;
@@ -16,7 +15,6 @@ canvas#bgCanvas {
   z-index: -2;
 }
 
-/* Container bleibt wie gehabt */
 .container {
   position: fixed;
   bottom: 50px;
@@ -48,7 +46,7 @@ h1 {
 }
 
 button {
-  background: linear-gradient(135deg,#8ec5fc,#e0c3fc);
+  background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
   border: none;
   color: #111;
   padding: 1rem 2rem;
@@ -82,7 +80,7 @@ button:hover {
   font-size: 1em;
   opacity: 0.8;
   animation: fall linear infinite;
-  z-index: -1;
+  z-index: 1;
 }
 
 @keyframes fall {
