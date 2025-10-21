@@ -1,12 +1,14 @@
 const steps = [
-  { text: "Hey… darf ich dir was fragen? 😏", buttons: ["Ja, natürlich!", "Hmm… okay 😅"] },
-  { text: "Super! Lust auf ein kleines Abenteuer heute?", buttons: ["Oh ja! 😄", "Vielleicht später 🤔"] },
-  { text: "Haha, toll! Ich hab schon was geplant…", buttons: ["Erzähl mir! 😎", "Überrasch mich! 😋"] },
-  { text: "Perfekt 😍 Ich dachte, wir könnten…", buttons: ["Burger essen 🍔", "Gemütlich kuscheln 🫂"] },
-  { text: "Oh, damit hab ich nicht gerechnet! 😳", buttons: ["Burger essen 🍔"] },
-  { text: "Haha, das war witzig 😂", buttons: ["Weiter 😌"] },
-  { text: "Vielleicht später? Kein Problem! 🔄", buttons: ["Nochmal starten 🔄"] },
-  { text: "Ende! Deshalb klickt man nicht auf fremde Links 😂", buttons: ["Neustart 🔁"] }
+  { text: "Hey Vanessa lass uns mal was klarstellen 😏", buttons: ["Ja, was denn!", "Hmm… okay 😅"] },
+  { text: "Wir wollen nach Straßburg auf den Weihnachtsmarkt", buttons: ["Oh ja! 😄", "Ja klar, klingt toll"] },
+  { text: "Wichtig: Wer fährt?", buttons: ["ich fahre", "Du  fährst"] },
+  { text: "Haha keine Sorge — Niklas fährt.", buttons: ["Okay, super!", "lässt sich das verhindern?"] },
+  { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen","Niklas Autoschlüssel verstecken"] },
+  { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
+  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen", buttons: ["Ein Notfallpaket buchen","Jaaa, let's go"] },
+  { text: "Wähle dein Notfallpaket", buttons: ["Zusätzliche Bremse auf Beifahrerseite","Einen Helm","Snacks"] },
+  { text: "Genau... ", buttons: ["SNACKS"] },
+  { text: "Das wird schön - und denk dran: 'Nein gabs hier nie.'", buttons: ["Nochmal 🔁","ich freu mich"] }
 ];
 
 let step = 0;
@@ -19,22 +21,89 @@ function showStep() {
       ${steps[step].buttons.map(b => `<button onclick="nextStep('${b}')">${b}</button>`).join("")}
     </div>`;
   msg.classList.remove("fade-in");
-  void msg.offsetWidth; // trigger reflow
+  void msg.offsetWidth; // reflow for animation
   msg.classList.add("fade-in");
 }
 
 function nextStep(choice) {
-  // Neue saubere Logik
-  if (choice === "Vielleicht später 🤔") step = 6;
-  else if (choice === "Gemütlich kuscheln 🫂") step = 4;
-  else if (choice === "Burger essen 🍔") {
-    if (step === 3) step = 4; // direkt zum „Oh, damit hab ich nicht gerechnet!“
-    else step = 5;             // danach weiter wie geplant
+  switch (choice) {
+    // Startfragen
+    case "Ja, was denn!":
+    case "Hmm… okay 😅":
+      step = 1;
+      break;
+
+    case "Oh ja! 😄":
+    case "Ja klar, klingt toll":
+      step = 2;
+      break;
+
+    // Wer fährt
+    case "ich fahre":
+    case "Du  fährst":
+      step = 3;
+      break;
+
+    case "Okay, super!":
+      step = 6; // direkt zu Plan: Weihnachtsmarkt
+      break;
+
+    case "lässt sich das verhindern?":
+      step = 4; // zu "Wie soll das verhindert werden"
+      break;
+
+    // Verhindern-Optionen
+    case "Niklas Führerschein verbrennen":
+      step = 5; // Ergebnis „das hat nicht geklappt“
+      break;
+
+    case "Niklas Autoschlüssel verstecken":
+      step = 5; // gleicher Gag
+      break;
+
+    case "Etwas anderes versuchen":
+      step = 4; // zurück zu Verhinderungsoptionen
+      break;
+
+    case "Perfekt - dann wär das geklärt":
+      step = 6; // weiter zu Plan
+      break;
+
+    // Notfallpaket & Spaßzweige
+    case "Ein Notfallpaket buchen":
+      step = 7;
+      break;
+
+    case "Jaaa, let's go":
+      step = 9;
+      break;
+
+    case "Zusätzliche Bremse auf Beifahrerseite":
+    case "Einen Helm":
+    case "Snacks":
+      step = 8;
+      break;
+
+    case "SNACKS":
+      step = 9;
+      break;
+
+    // Ende / Neustart
+    case "Nochmal 🔁":
+      step = 0;
+      break;
+
+    case "ich freu mich":
+      step = 9; // einfach Ende
+      break;
+
+    default:
+      step++;
+      break;
   }
-  else if (choice.includes("Neustart") || choice.includes("Nochmal")) step = 0;
-  else step++;
+
   showStep();
 }
 
-// Direkt beim Laden den ersten Schritt anzeigen
-showStep();
+// Direkt beim Laden anzeigen
+document.addEventListener("DOMContentLoaded", showStep);
