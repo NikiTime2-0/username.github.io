@@ -3,14 +3,14 @@ const steps = [
   { text: "Wir wollen nach Straßburg auf den Weihnachtsmarkt", buttons: ["Oh ja! 😄", "Ja klar, klingt toll"] },
   { text: "Wichtig: Wer fährt?", buttons: ["ich fahre", "Du  fährst"] },
   { text: "Haha keine Sorge — Niklas fährt.", buttons: ["Okay, super!", "lässt sich das verhindern?"] },
-  { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen", "Niklas Autoschlüssel verstecken"] },
-  { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen", "Perfekt - dann wär das geklärt"] },
-  { text: "Jemand wollte Niklas Führerschein verbrennen — aber ein Führerschein brennt nicht. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen", "Perfekt - dann wär das geklärt"] },
-  { text: "Alles klar – dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen!", buttons: ["Ein Notfallpaket buchen", "Jaaa, let's go"] },
-  { text: "Wähle dein Notfallpaket:", buttons: ["Zusätzliche Bremse auf Beifahrerseite", "Einen Helm", "Snacks"] },
-  { text: "Genau… Snacks retten alles 😄", buttons: ["Weiter"] },
-  { text: "Bis bald! 😄", buttons: ["Neustart 🔁"] },
-  { text: "Das wird schön – und denk dran: 'Nein gabs hier nie.' 😏", buttons: ["Nochmal 🔁", "Ich freu mich! 😄"] }
+  { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen","Niklas Autoschlüssel verstecken"] },
+  { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
+  { text: "Jemand wollte Niklas Führerschein verbrennen - aber ein Führerschein brennt nicht. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
+  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen", buttons: ["Ein Notfallpaket buchen","Jaaa, let's go"] },
+  { text: "Wähle dein Notfallpaket", buttons: ["Zusätzliche Bremse auf Beifahrerseite","Einen Helm","Snacks"] },
+  { text: "Genau... ", buttons: ["SNACKS"] },
+  { text: "Das wird schön - und denk dran: 'Nein gabs hier nie.'", buttons: ["Nochmal 🔁","ich freu mich"] },
+  { text: "Bis bald!", buttons: ["Neustart"] }
 ];
 
 let step = 0;
@@ -23,7 +23,7 @@ function showStep() {
       ${steps[step].buttons.map(b => `<button onclick="nextStep('${b}')">${b}</button>`).join("")}
     </div>`;
   msg.classList.remove("fade-in");
-  void msg.offsetWidth; // reflow for animation
+  void msg.offsetWidth;
   msg.classList.add("fade-in");
 }
 
@@ -47,16 +47,16 @@ function nextStep(choice) {
       break;
 
     case "Okay, super!":
-      step = 7;
+      step = 7; // direkt zu Plan
       break;
 
     case "lässt sich das verhindern?":
-      step = 4;
+      step = 4; // zur Auswahl der Verhinderung
       break;
 
-    // Verhindern
+    // Verhinderung
     case "Niklas Führerschein verbrennen":
-      step = 6; // neue „Führerschein brennt nicht“-Variante
+      step = 6;
       break;
 
     case "Niklas Autoschlüssel verstecken":
@@ -71,13 +71,13 @@ function nextStep(choice) {
       step = 7;
       break;
 
-    // Notfallpaket
+    // Plan & Notfallpaket
     case "Ein Notfallpaket buchen":
       step = 8;
       break;
 
     case "Jaaa, let's go":
-      step = 11;
+      step = 10; // führt jetzt korrekt zur „Das wird schön…“
       break;
 
     case "Zusätzliche Bremse auf Beifahrerseite":
@@ -86,18 +86,18 @@ function nextStep(choice) {
       step = 9;
       break;
 
-    case "Weiter":
+    case "SNACKS":
       step = 10;
       break;
 
-    // Ende / Neustart
+    // Ende
     case "Nochmal 🔁":
-    case "Neustart 🔁":
+    case "Neustart":
       step = 0;
       break;
 
-    case "Ich freu mich! 😄":
-      step = 10;
+    case "ich freu mich":
+      step = 11;
       break;
 
     default:
@@ -108,5 +108,4 @@ function nextStep(choice) {
   showStep();
 }
 
-// Start direkt beim Laden
 document.addEventListener("DOMContentLoaded", showStep);
