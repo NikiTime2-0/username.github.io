@@ -4,15 +4,8 @@ html, body {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
-  background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
-  color: white;
-}
-
-canvas#bgCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+  background: linear-gradient(to bottom, #0b1b3f, #000814); /* dunkler Nachthimmel */
+  position: relative;
 }
 
 .container {
@@ -24,10 +17,11 @@ canvas#bgCanvas {
   max-width: 450px;
   padding: 2rem;
   border-radius: 25px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
   text-align: center;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  z-index: 2;
 }
 
 h1 {
@@ -35,7 +29,7 @@ h1 {
   font-size: 1.6rem;
   margin-bottom: 1.5rem;
   line-height: 1.4;
-  color: #fff;
+  color: #111;
 }
 
 .buttons {
@@ -45,22 +39,21 @@ h1 {
 }
 
 button {
-  background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
+  background: linear-gradient(135deg,#a0d8ff,#4da6ff);
   border: none;
-  color: #0d1b2a;
+  color: #111;
   padding: 1rem 2rem;
   margin: 0.5rem;
   border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
   transform: scale(1.05);
-  background: linear-gradient(135deg, #81d4fa, #b3e5fc);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
 }
 
 .fade-in {
@@ -70,4 +63,26 @@ button:hover {
 
 @keyframes fadeIn {
   to { opacity: 1; }
+}
+
+/* ❄️ Schneeflocken */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1em;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.3;
+  }
 }
