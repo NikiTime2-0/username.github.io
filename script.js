@@ -10,24 +10,21 @@ function createSnow() {
   snow.style.opacity = Math.random() * 0.8 + 0.2;
 
   document.body.appendChild(snow);
-
   setTimeout(() => snow.remove(), 8000);
 }
-
-// Alle 250ms eine Schneeflocke erzeugen
 setInterval(createSnow, 250);
 
-
+// 💬 Gesprächsverlauf
 const steps = [
   { text: "Hey Vanessa lass uns mal was klarstellen 😏", buttons: ["Ja, was denn!", "Hmm… okay 😅"] },
   { text: "Wir wollen nach Straßburg auf den Weihnachtsmarkt", buttons: ["Oh ja! 😄", "Ja klar, klingt toll"] },
   { text: "Wichtig: Wer fährt?", buttons: ["ich fahre", "Du  fährst"] },
   { text: "Haha keine Sorge — Niklas fährt.", buttons: ["Okay, super!", "lässt sich das verhindern?"] },
-  { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen","Niklas Autoschlüssel verstecken"] },
+  { text: "Wie soll das verhindert werden?", buttons: ["Niklas Führerschein verbrennen","Niklas Autoschlüssel verstecken"] },
   { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
-  { text: "Jemand wollte Niklas Führerschein verbrennen - aber ein Führerschein brennt nicht. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
-  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen", buttons: ["Ein Notfallpaket buchen","Jaaa, let's go"] },
-  { text: "Wähle dein Notfallpaket", buttons: ["Zusätzliche Bremse auf Beifahrerseite","Einen Helm","Snacks"] },
+  { text: "Jemand wollte Niklas Führerschein verbrennen — aber ein Führerschein brennt nicht. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
+  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen!", buttons: ["Ein Notfallpaket buchen","Jaaa, let's go"] },
+  { text: "Wähle dein Notfallpaket:", buttons: ["Zusätzliche Bremse auf Beifahrerseite","Einen Helm","Snacks"] },
   { text: "Genau... ", buttons: ["SNACKS"] },
   { text: "Das wird schön - und denk dran: 'Nein gabs hier nie.'", buttons: ["Nochmal 🔁","ich freu mich"] },
   { text: "Bis bald!", buttons: ["Neustart"] }
@@ -49,82 +46,45 @@ function showStep() {
 
 function nextStep(choice) {
   switch (choice) {
-    // Einstieg
     case "Ja, was denn!":
     case "Hmm… okay 😅":
-      step = 1;
-      break;
-
+      step = 1; break;
     case "Oh ja! 😄":
     case "Ja klar, klingt toll":
-      step = 2;
-      break;
-
-    // Wer fährt
+      step = 2; break;
     case "ich fahre":
     case "Du  fährst":
-      step = 3;
-      break;
-
+      step = 3; break;
     case "Okay, super!":
-      step = 7; // direkt zu Plan
-      break;
-
+      step = 7; break;
     case "lässt sich das verhindern?":
-      step = 4; // zur Auswahl der Verhinderung
-      break;
-
-    // Verhinderung
+      step = 4; break;
     case "Niklas Führerschein verbrennen":
-      step = 6;
-      break;
-
+      step = 6; break;
     case "Niklas Autoschlüssel verstecken":
-      step = 5;
-      break;
-
+      step = 5; break;
     case "Etwas anderes versuchen":
-      step = 4;
-      break;
-
+      step = 4; break;
     case "Perfekt - dann wär das geklärt":
-      step = 7;
-      break;
-
-    // Plan & Notfallpaket
+      step = 7; break;
     case "Ein Notfallpaket buchen":
-      step = 8;
-      break;
-
+      step = 8; break;
     case "Jaaa, let's go":
-      step = 10; // führt jetzt korrekt zur „Das wird schön…“
-      break;
-
+      step = 10; break;
     case "Zusätzliche Bremse auf Beifahrerseite":
     case "Einen Helm":
     case "Snacks":
-      step = 9;
-      break;
-
+      step = 9; break;
     case "SNACKS":
-      step = 10;
-      break;
-
-    // Ende
+      step = 10; break;
+    case "ich freu mich":
+      step = 11; break;
     case "Nochmal 🔁":
     case "Neustart":
-      step = 0;
-      break;
-
-    case "ich freu mich":
-      step = 11;
-      break;
-
+      step = 0; break;
     default:
       step++;
-      break;
   }
-
   showStep();
 }
 
