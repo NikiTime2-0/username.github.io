@@ -3,12 +3,14 @@ const steps = [
   { text: "Wir wollen nach Straßburg auf den Weihnachtsmarkt", buttons: ["Oh ja! 😄", "Ja klar, klingt toll"] },
   { text: "Wichtig: Wer fährt?", buttons: ["ich fahre", "Du  fährst"] },
   { text: "Haha keine Sorge — Niklas fährt.", buttons: ["Okay, super!", "lässt sich das verhindern?"] },
-  { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen","Niklas Autoschlüssel verstecken"] },
-  { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen","Perfekt - dann wär das geklärt"] },
-  { text: "Alles klar - dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen", buttons: ["Ein Notfallpaket buchen","Jaaa, let's go"] },
-  { text: "Wähle dein Notfallpaket", buttons: ["Zusätzliche Bremse auf Beifahrerseite","Einen Helm","Snacks"] },
-  { text: "Genau... ", buttons: ["SNACKS"] },
-  { text: "Das wird schön - und denk dran: 'Nein gabs hier nie.'", buttons: ["Nochmal 🔁","ich freu mich"] }
+  { text: "Wie soll das verhindert werden", buttons: ["Niklas Führerschein verbrennen", "Niklas Autoschlüssel verstecken"] },
+  { text: "Jemand hat die Schlüssel versteckt — aber Niklas findet immer alles. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen", "Perfekt - dann wär das geklärt"] },
+  { text: "Jemand wollte Niklas Führerschein verbrennen — aber ein Führerschein brennt nicht. Ergebnis: Das hat nicht geklappt. 😂", buttons: ["Etwas anderes versuchen", "Perfekt - dann wär das geklärt"] },
+  { text: "Alles klar – dann ist der Plan: Weihnachtsmarkt, Straßburg, wir kommen!", buttons: ["Ein Notfallpaket buchen", "Jaaa, let's go"] },
+  { text: "Wähle dein Notfallpaket:", buttons: ["Zusätzliche Bremse auf Beifahrerseite", "Einen Helm", "Snacks"] },
+  { text: "Genau… Snacks retten alles 😄", buttons: ["Weiter"] },
+  { text: "Bis bald! 😄", buttons: ["Neustart 🔁"] },
+  { text: "Das wird schön – und denk dran: 'Nein gabs hier nie.' 😏", buttons: ["Nochmal 🔁", "Ich freu mich! 😄"] }
 ];
 
 let step = 0;
@@ -27,7 +29,7 @@ function showStep() {
 
 function nextStep(choice) {
   switch (choice) {
-    // Startfragen
+    // Einstieg
     case "Ja, was denn!":
     case "Hmm… okay 😅":
       step = 1;
@@ -45,56 +47,57 @@ function nextStep(choice) {
       break;
 
     case "Okay, super!":
-      step = 6; // direkt zu Plan: Weihnachtsmarkt
-      break;
-
-    case "lässt sich das verhindern?":
-      step = 4; // zu "Wie soll das verhindert werden"
-      break;
-
-    // Verhindern-Optionen
-    case "Niklas Führerschein verbrennen":
-      step = 5; // Ergebnis „das hat nicht geklappt“
-      break;
-
-    case "Niklas Autoschlüssel verstecken":
-      step = 5; // gleicher Gag
-      break;
-
-    case "Etwas anderes versuchen":
-      step = 4; // zurück zu Verhinderungsoptionen
-      break;
-
-    case "Perfekt - dann wär das geklärt":
-      step = 6; // weiter zu Plan
-      break;
-
-    // Notfallpaket & Spaßzweige
-    case "Ein Notfallpaket buchen":
       step = 7;
       break;
 
+    case "lässt sich das verhindern?":
+      step = 4;
+      break;
+
+    // Verhindern
+    case "Niklas Führerschein verbrennen":
+      step = 6; // neue „Führerschein brennt nicht“-Variante
+      break;
+
+    case "Niklas Autoschlüssel verstecken":
+      step = 5;
+      break;
+
+    case "Etwas anderes versuchen":
+      step = 4;
+      break;
+
+    case "Perfekt - dann wär das geklärt":
+      step = 7;
+      break;
+
+    // Notfallpaket
+    case "Ein Notfallpaket buchen":
+      step = 8;
+      break;
+
     case "Jaaa, let's go":
-      step = 9;
+      step = 11;
       break;
 
     case "Zusätzliche Bremse auf Beifahrerseite":
     case "Einen Helm":
     case "Snacks":
-      step = 8;
+      step = 9;
       break;
 
-    case "SNACKS":
-      step = 9;
+    case "Weiter":
+      step = 10;
       break;
 
     // Ende / Neustart
     case "Nochmal 🔁":
+    case "Neustart 🔁":
       step = 0;
       break;
 
-    case "ich freu mich":
-      step = 9; // einfach Ende
+    case "Ich freu mich! 😄":
+      step = 10;
       break;
 
     default:
@@ -105,5 +108,5 @@ function nextStep(choice) {
   showStep();
 }
 
-// Direkt beim Laden anzeigen
+// Start direkt beim Laden
 document.addEventListener("DOMContentLoaded", showStep);
