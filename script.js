@@ -1,3 +1,76 @@
+// 🌙 Mond erzeugen
+function createMoon() {
+  const moon = document.createElement("div");
+  moon.id = "moon";
+  moon.style.position = "fixed";
+  moon.style.right = "50px";
+  moon.style.top = "50px";
+  moon.style.width = "80px";
+  moon.style.height = "80px";
+  moon.style.background = "radial-gradient(circle at 30% 30%, #fff, #ccc)";
+  moon.style.borderRadius = "50%";
+  moon.style.boxShadow = "0 0 30px rgba(255,255,255,0.5)";
+  document.body.appendChild(moon);
+}
+createMoon();
+
+// ⭐ Viele Sterne erzeugen
+function createStar() {
+  const star = document.createElement("div");
+  star.classList.add("star");
+  star.style.position = "absolute";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.top = Math.random() * 80 + "vh"; // obere 80% des Bildschirms
+  const size = Math.random() * 2 + 1;
+  star.style.width = size + "px";
+  star.style.height = size + "px";
+  star.style.background = "white";
+  star.style.borderRadius = "50%";
+  star.style.opacity = Math.random();
+  document.body.appendChild(star);
+
+  // Flimmern
+  setInterval(() => {
+    star.style.opacity = Math.random();
+  }, Math.random() * 3000 + 1000);
+}
+
+// Mehr Sterne beim Start erzeugen
+for (let i = 0; i < 150; i++) {
+  createStar();
+}
+
+// 🌠 Sternschnuppen erzeugen
+function createShootingStar() {
+  const shootingStar = document.createElement("div");
+  shootingStar.classList.add("shooting-star");
+  shootingStar.style.left = Math.random() * 100 + "vw";
+  shootingStar.style.top = Math.random() * 30 + "vh"; // obere Hälfte
+  shootingStar.style.width = "2px";
+  shootingStar.style.height = "80px";
+  shootingStar.style.background = "linear-gradient(white, transparent)";
+  shootingStar.style.position = "absolute";
+  shootingStar.style.transform = "rotate(45deg)";
+  shootingStar.style.opacity = 0.8;
+  shootingStar.style.transition = "all 1s linear";
+  document.body.appendChild(shootingStar);
+
+  // Bewegung nach rechts unten
+  setTimeout(() => {
+    shootingStar.style.left = parseFloat(shootingStar.style.left) + 200 + "px";
+    shootingStar.style.top = parseFloat(shootingStar.style.top) + 200 + "px";
+    shootingStar.style.opacity = 0;
+  }, 50);
+
+  // Entfernen nach Animation
+  setTimeout(() => shootingStar.remove(), 1000);
+}
+
+// Intervalle
+setInterval(createStar, 300);        // Sterne kontinuierlich
+setInterval(createShootingStar, 3000); // Sternschnuppen alle paar Sekunden
+
+
 const steps = [
   { 
     text: "Hey… darf ich dich was fragen? 😏", 
